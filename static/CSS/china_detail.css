@@ -1,0 +1,244 @@
+body {
+	margin: 0;
+	background: #333;
+}
+
+
+#title {
+	position: absolute;
+	width: 40%;
+	height: 10%;
+	top: 0;
+	left: 30%;
+	/* background: #666666; */
+	color: white;
+	font-size: 35px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#tim {
+	position: absolute;
+	/* width: 30%; */
+	height: 10%;
+	right: 2%;
+	top: 5%;
+	color: #FFFFFF;
+	font-size: 16px;
+}
+
+#c1 {
+	position: absolute;
+	width: 40%;
+	height: 12%;
+	top: 10%;
+	left: 30%;
+	color: white
+		/* background: #777777; */
+}
+
+
+#c1_2 {
+	position: absolute;
+	width: 40%;
+	height: 12%;
+	top: 23%;
+	left: 30%;
+	color: white
+		/* background: #777777; */
+}
+
+
+.num {
+	width: 33%;
+	float: left;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: gold;
+	font-size: 12px;
+	/*margin-top: 20px;*/
+}
+
+.txt {
+	width: 33%;
+	float: left;
+	font-family: "幼圆";
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+}
+
+.txt h2 {
+	margin: 0;
+}
+
+
+#c2 {
+	position: absolute;
+	width: 40%;
+	height: 65%;
+	top: 35%;
+	left: 30%;
+	background: #888888;
+}
+
+#l1 {
+	position: absolute;
+	width: 30%;
+	height: 45%;
+	top: 10%;
+	left: 0%;
+	background: #666666;
+}
+
+#l2 {
+	position: absolute;
+	width: 30%;
+	height: 45%;
+	top: 55%;
+	left: 0%;
+	background: #777;
+}
+
+#r1 {
+	position: absolute;
+	width: 30%;
+	height: 45%;
+	top: 10%;
+	right: 0%;
+	background: #666666;
+}
+
+#r2 {
+	position: absolute;
+	width: 30%;
+	height: 45%;
+	top: 55%;
+	right: 0%;
+	background: #333;
+}
+
+.Common_1 .Common_2 {
+    font-size: 18px;
+    font-weight: 600;
+    vertical-align: middle;
+	color: white;
+}
+.Common_1 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+.Virus  {
+    padding-top: 1.25rem;
+    padding-left: 1.04rem;
+    padding-right: 0;
+}
+
+.Virus_1_1  {
+    position: absolute;
+    left: -.8125rem;
+    top: 0;
+    width: 1px;
+    display: block;
+    height: 7rem;
+    background: #eee;
+}
+
+.Virus_1_2  {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -.1rem;
+    left: -.5rem;
+    width: 1rem;
+    height: 1rem;
+    background: #333;
+}
+
+.Virus_1_3 {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: .05rem;
+    left: -.3225rem;
+    width: .375rem;
+    height: .375rem;
+    background: #0faeb5;
+    border-radius: .375rem;
+    border-color: #cfeff0;
+    border: .1875rem solid #cfeff0;
+}
+
+.Virus_2_1 {
+    color: #999;
+    font-size: 15px;
+    line-height: .875rem;
+}
+.Virus_3_1  {
+    margin: 27px 0 ;
+	font-size: 18px;
+}
+
+.Virus_3_2 {
+	width: 90%;
+    padding: .4rem .525rem;
+    line-height: 2rem;
+    background: #6d6d6d;
+    border-radius: .27rem;
+    font-weight: 500;
+    color: white;
+}
+
+/* 此处是设置自动匹配横屏，以适应手机显示 使用下面定义的id:gyroContain   */
+@media screen and (orientation: portrait) {
+    html{
+        width : 100vmin;
+        height : 100vmax;
+    }
+    body{
+        width : 100vmin;
+        height : 100vmax;
+    }
+    #gyroContain{
+        width : 100vmax;
+        height : 100vmin;
+        transform-origin: top left;
+        transform: rotate(90deg) translate(0,-100vmin);
+    }
+  }
+@media screen and (orientation: landscape) {
+    html{
+        width : 100vmax;
+        height : 100vmin;
+    }
+    body{
+        width : 100vmax;
+        height : 100vmin;
+    }
+    #gyroContain{
+        width : 100vmax;
+        height : 100vmin;
+    }
+}

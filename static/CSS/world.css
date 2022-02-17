@@ -1,0 +1,46 @@
+body{
+	margin: 0;
+	background: #333;
+}
+#world{
+	position: absolute;
+	width: 100%;
+	height: 84%;
+	top: 16%;
+	left: 0%;
+	background: #333;
+}
+
+.d1 {
+	position: absolute;
+	margin-top: 18px;
+	width:250px;
+	right: 5%;
+}
+.d1_input {
+  width: 70%;
+  height: 42px;
+  border: 2px solid #d6d6d6;
+  border-radius: 5px;
+  outline: none;
+  background: #fffdf5;
+  color: #9E9C9C;
+}
+.d1_button:hover{
+  background: #7BA7AB;
+}
+.d1_button {
+  top: 0;
+  width: 52px;
+  height: 42px;
+  border: none;
+  background: #d6d6d6;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.d1_button:before {
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+

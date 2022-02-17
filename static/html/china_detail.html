@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	    <title>COVID-19-visualization</title>
+	
+	    <!-- Bootstrap -->
+	     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+	     <!--你自己的css样式-->
+	     <link rel="stylesheet" href="../CSS/index.css">
+        <script src="../JS/jquery-3.4.1.min.js"></script>
+		<script src="../JS/echarts.min.js"></script>
+		<script src="../JS/china.js"></script>
+        <script src="../JS/echarts-wordcloud.min.js"></script>
+        <link href="../CSS/china_detail.css" rel="stylesheet"/>
+        <!--
+     	作者：offline
+     	时间：2020-04-25
+     	描述：站点图标
+         -->
+        <link rel="shortcut icon" href="../imgs/bige_data.png" type="image/x-icon">
+	</head>
+	<body>
+		<!--
+        	作者：offline
+        	时间：2020-05-06
+        	描述：头
+        -->
+        <header id="cov_header">
+		<nav class="navbar navbar-default navbar navbar-fixed-top navbar-cov">
+		  <div class="container">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cov_nav" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">
+		      	<!--<img alt="Brand" src="../static/imgs/logo_bochuang.png" width="40px" height="40px">
+		      	COVID-19-visualization-->
+		      	<!--<img src="../static/imgs/bige_data.png" width="30" height="30" class="d-inline-block align-center" alt="Brand">-->
+        		<img src="../imgs/logo_bochuang.png" width="30" height="30" class="d-inline-block align-center" alt="Brand">
+        		COVID-19-visualization
+		      </a>
+		    </div>
+		
+		    <div class="collapse navbar-collapse" id="cov_nav">
+		      <ul class="nav navbar-nav nav-tabs" role="tablist">
+                    
+                    <li role="presentation"><a href="world_index.html" target="_self">世界地图</a></li>
+                    <!--<li class="active"><a href="javascript:;">世界地图 </a></li>-->
+                    <li role="presentation"><a href="china_index.html" target="_self">中国地图</a></li>
+                    <li role="presentation" class="active"><a href="china_detail.html">中国详细及各省详细</a></li>
+                    <li role="presentation"><a href="../html/All_countries.html" target="_blank">各国趋势</a></li>
+                    <li role="presentation"><a href="../html/Statistics.html">重点国家疫情统计</a></li>
+                    
+              </ul>
+              
+		      <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+		        <li><a class="nav-link" href="https://github.com/BlankerL/DXY-2019-nCoV-Data" target="_blank">数据来源</a></li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		</header>
+		<div id="gyroContain">
+			<div id="title">全国疫情实时追踪</div>
+			<div id="tim"></div>
+			<div id="l1">我是左1</div>
+			<div id="l2">我是左2</div>
+			<div id="c1">
+				<div class="num" style="color:#CE3F79"><h1></h1></div>
+				<div class="num" style="color:#E68C00"><h1></h1></div>
+				<div class="num" style="color:#87ceeb"><h1></h1></div>
+				<div class="txt"><h2>累计确诊</h2></div>
+				<div class="txt" ><h2>剩余疑似</h2></div>
+				<div class="txt"><h2>累计治愈</h2></div>
+			</div>
+            <div id="c1_2">
+				<div class="num" style="color:#E68C00"><h1></h1></div>
+				<div class="num" style="color:#87ceeb"><h1></h1></div>
+				<div class="num" style="color:#D8C8E2"><h1></h1></div>
+				<div class="txt" ><h2>累计死亡</h2></div>
+				<div class="txt" ><h2>现有确诊</h2></div>
+				<div class="txt"><h2>境外输入</h2></div>
+			</div>
+			<div id="c2">我是中2</div>
+			<div id="r1">我是右1</div>
+			<div id="r2">
+                    <div class="Common_1">
+                        <span class="Common_2"> 实时播报</span>
+                    </div>
+                    <div class="Virus">
+                        <div href="http://m.news.cctv.com/2020/05/25/ARTI1RwKhRqcMwyDZgdf4x0q200525.shtml" style="position: relative;">
+                            <span class="Virus_1_1">
+                                <span class="Virus_1_2"></span>
+                                <span class="Virus_1_3"></span>
+                            </span>
+                            <div class="Virus_2_1">
+                                <span class="Virus_r2">2020年05月25日
+                                </span>
+                                &nbsp;&nbsp;
+                                <span class>20:25
+                                </span>
+                            </div>
+                            <div class="Virus_3_1">
+                                <a href="http://m.news.cctv.com/2020/05/25/ARTI1RwKhRqcMwyDZgdf4x0q200525.shtml" style="text-decoration:none;">
+                                    <div class="Virus_3_2">荷兰新增新冠肺炎确诊病例209例 累计确诊45445例</div>
+                                </a>
+                            </div>
+                        </div>
+                         <div href="http://m.news.cctv.com/2020/05/25/ARTIq1U4IEOc9UUUIRt4eA7s200525.shtml" style="position: relative;">
+                            <span class="Virus_1_1">
+                                <span class="Virus_1_2"></span>
+                                <span class="Virus_1_3"></span>
+                            </span>
+                            <div class="Virus_2_1">
+                                <span class="Virus_r2">2020年05月25日
+                                </span>
+                                &nbsp;&nbsp;
+                                <span class>20:18
+                                </span>
+                            </div>
+                            <div class="Virus_3_1">
+                                <a href="http://m.news.cctv.com/2020/05/25/ARTIq1U4IEOc9UUUIRt4eA7s200525.shtml" style="text-decoration:none;">
+                                    <div class="Virus_3_2">外交部：新冠病毒疫苗研发不是中美之争 而是人类与病毒之争</div>
+                                </a>
+                            </div>
+                        </div>
+                         <div href="http://m.news.cctv.com/2020/05/25/ARTI6RnsKpE6h3HY8iP1X3Xr200525.shtml" style="position: relative;">
+                            <span class="Virus_1_1">
+                                <span class="Virus_1_2"></span>
+                                <span class="Virus_1_3"></span>
+                            </span>
+                            <div class="Virus_2_1">
+                                <span class="Virus_r2">2020年05月25日 
+                                </span>
+                                &nbsp;&nbsp;
+                                <span class>19:56
+                                </span>
+                            </div>
+                            <div class="Virus_3_1">
+                               <a href="http://m.news.cctv.com/2020/05/25/ARTI6RnsKpE6h3HY8iP1X3Xr200525.shtml" style="text-decoration:none;">
+                                    <div class="Virus_3_2">卡塔尔新增1751例新冠肺炎确诊病例 累计确诊45465例</div>
+                                </a>
+                            </div>
+                        </div>
+
+                         <div href="http://m.news.cctv.com/2020/05/25/ARTIOsnJZqH7VLU1yrjVZzMu200525.shtml" style="position: relative;">
+                            <span class="Virus_1_1">
+                                <span class="Virus_1_2"></span>
+                                <span class="Virus_1_3"></span>
+                            </span>
+                            <div class="Virus_2_1">
+                                <span class="Virus_r2">2020年05月25日 
+                                </span>
+                                &nbsp;&nbsp;
+                                <span class>18:24
+                                </span>
+                            </div>
+                            <div class="Virus_3_1">
+                               <a href="http://m.news.cctv.com/2020/05/25/ARTIOsnJZqH7VLU1yrjVZzMu200525.shtml" style="text-decoration:none;">
+                                    <div class="Virus_3_2">外交部：将在力所能及范围内继续对非洲提供抗疫援助</div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+            </div>
+			<script src="../JS/ec_center_chinamap.js"></script>
+			<script src="../JS/ec_left1.js"></script>
+			<script src="../JS/ec_left2.js"></script>
+			<script src="../JS/ec_right1.js"> </script>
+			<script src="../JS/controller.js"> </script>
+		</div>
+
+
+	</body>
+</html>

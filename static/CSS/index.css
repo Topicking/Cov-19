@@ -1,0 +1,80 @@
+body{
+	background: #333;
+}
+#cov_header .navbar-cov{
+	background-color: #FFFFFF;
+}
+#cov_header .navbar-cov .navbar-brand{
+	height: 70px;
+	padding: 20px 15px;
+}
+#cov_header .navbar-cov .d-inline-block{
+	display: inline-block!important;
+	
+}
+#cov_header .navbar-cov .navbar-nav a{
+	height: 70px;
+	line-height: 40px;
+}
+
+#cov_header .navbar-cov .navbar-nav li.active a,
+#cov_header .navbar-cov .navbar-nav li a:hover{
+	background-color: transparent;
+	border-bottom: 2px solid #66AFE9;
+}
+#cov_header .navbar-cov .navbar-toggle {
+
+    margin-top: 18px;
+}
+#china{
+	position: absolute;
+	margin: 0;
+	width: 100%;
+	top: 17%;
+	left: 0%;
+	bottom: 0px;
+	background-color: #333;
+	
+
+}
+.cc{
+	background: #1B6D85;
+	display: block;
+	top: 10%;
+}
+
+
+
+.map_header{
+	display: flex;
+    align-items: center;
+	width:100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 10%;
+    font-size:15px;
+    background: #333;
+	position: absolute;
+	top: 8%;
+	left: 5%;
+}
+.nav_1{
+	width: 30%;
+	display: flex;
+    flex-flow: row;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav_1_1{
+	backgroundColor:#ffffff;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width:25%;
+    height:15%;
+    color: #666;
+    border-radius: 5px;
+	margin-left: 10px;
+}

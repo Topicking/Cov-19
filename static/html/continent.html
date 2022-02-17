@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	    <title>各国疫情监控</title>
+	
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+	     <!--你自己的css样式-->
+	    <link rel="stylesheet" href="../CSS/index.css">
+        <!--
+     	作者：offline
+     	时间：2020-04-25
+     	描述：站点图标
+         -->
+        <link rel="shortcut icon" href="../imgs/bige_data.png" type="image/x-icon">
+        <script src="../JS/jquery-3.4.1.min.js"></script>
+		<script src="../JS/echarts.min.js"></script>
+		<script src="../JS/china.js"></script>
+        <script src="../JS/echarts-wordcloud.min.js"></script>
+        <style>
+            body {
+                   margin: 0px;
+                   background: #333;
+                }
+        </style>
+
+	</head>
+	<body>
+		<!--
+        	作者：offline
+        	时间：2020-04-28
+        	描述：头部
+        -->
+        <header id="cov_header">
+		<nav class="navbar navbar-default navbar navbar-fixed-top navbar-cov">
+		  <div class="container">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cov_nav" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">
+		      	<!--<img alt="Brand" src="../static/imgs/logo_bochuang.png" width="40px" height="40px">
+		      	COVID-19-visualization-->
+		      	<!--<img src="../static/imgs/bige_data.png" width="30" height="30" class="d-inline-block align-center" alt="Brand">-->
+        		<img src="../imgs/logo_bochuang.png" width="30" height="30" class="d-inline-block align-center" alt="Brand">
+        		COVID-19-visualization
+		      </a>
+		    </div>
+		
+		    <div class="collapse navbar-collapse" id="cov_nav">
+		      <ul class="nav navbar-nav nav-tabs" role="tablist">
+                    
+                    <li role="presentation"><a href="world_index.html" target="_self">世界地图</a></li>
+                    <!--<li class="active"><a href="javascript:;">世界地图 </a></li>-->
+                    <li role="presentation"><a href="china_index.html" target="_self">中国地图</a></li>
+                    <li role="presentation"><a href="china_detail.html">中国详细及各省详细</a></li>
+                    <li role="presentation" class="active"><a href="../html/All_countries.html" target="_blank">各国趋势</a></li>
+                    <li role="presentation"><a href="../html/Statistics.html">重点国家疫情统计</a></li>
+                    
+              </ul>
+              
+		      <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+		        <li><a class="nav-link" href="https://github.com/BlankerL/DXY-2019-nCoV-Data" target="_blank">数据来源</a></li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		</header>
+    	<div class="container-fluid">
+		    <div class="button_jup" style="position: relative; top: 72px; background: #333;">
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=Asia'">亚洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=Europe'">欧洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=Africa'">非洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=South America'">南美洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=North America'">北美洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=Oceania'">大洋洲</button>
+			    <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='../html/continent.html?continent=Others'">其他</button>
+		    </div>
+		</div>
+    
+    
+	<script>
+        var parm1 = getParam('continent');
+        get_all_data()
+        get_data()
+        function getParam(paramName) {
+            paramValue = "";
+            isFound = false;
+            if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+                arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&");
+                i = 0;
+                console.log(arrSource)
+                while (i < arrSource.length && !isFound) {
+                    if (arrSource[i].indexOf("=") > 0) {
+                        if (arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase()) {
+                            paramValue = arrSource[i].split("=")[1];
+                            isFound = true;
+                        }
+                    }
+                    i++;
+                }
+            }
+            console.log(paramValue)
+            return paramValue;
+        }
+        function get_all_data() {
+            $.ajax({
+                url: "/continent/" + parm1,
+                success: function (data) {
+                    let a = [];
+                    let i = 0;
+                    a = data.country
+                    a.forEach(v => {
+                        i++;
+                        let str = v[0];
+                        var div = document.createElement("div");
+                        div.id = "c" + String(i);
+                        div.style.position = "relative";
+                        div.style.top = "80px";
+                        div.style.height = "430px";
+                        div.style.width = "45%";
+
+                        div.style.cssFloat = "left";
+                        div.style.padding = "50px 30px";
+                        div.color = "green";
+                        div.innerHTML = "Javascript DIV";
+                        document.body.appendChild(div);
+
+                    });
+                },
+                error: function (xhr, type, errorThrown) {
+
+                }
+            })
+        }
+        function get_data() {
+            $.ajax({
+                url: "/continent/" + parm1,
+                success: function (data) {
+                    let a = [];
+                    let i = 0;
+                    a = data.country
+                    a.forEach(v => {
+                        i++;
+                        let str1 = "c" + String(i)
+                        let str = v[0];
+                        creatEcharts(str1, str)
+                    });
+                },
+                error: function (xhr, type, errorThrown) {
+
+                }
+            })
+        }
+
+        function creatEcharts(str1, str) {
+            var myChart = echarts.init(document.getElementById(str1), "dark");
+            var option = {
+                title: {
+                    text: str + '疫情趋势',
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                dataZoom: [{
+                    type: 'inside'
+
+                }],
+                legend: {
+                    data: ['累计确诊', "累计治愈", "累计死亡", "新增确诊", "新增治愈", "新增死亡"],
+                    left: 'center',
+                    top: 'bottom',
+                    padding: [
+                        10,  // 上
+                        10, // 右
+                        0,  // 下
+                        10, // 左
+                    ]
+
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: true},
+                        magicType: {show: true, type: ['line']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: [1, 2, 3]
+                    }
+                ],
+                yAxis: [{
+                    type: 'value',
+                    //y轴字体设置
+                    axisLabel: {
+                        show: true,
+                        color: 'white',
+                        fontSize: 12,
+                        formatter: function (value) {
+                            if (value >= 1000) {
+                                value = value / 1000 + 'k';
+                            }
+                            return value;
+                        }
+                    },
+                    axisLine: {
+                        show: true
+                    },
+                    //与x轴平行的线样式
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#17273B',
+                            width: 1,
+                            type: 'solid',
+                        }
+                    }
+                },
+                    {
+                        type: 'value',
+                        name: '当日新增',
+                        axisLabel: {
+                            show: true,
+                            color: 'white',
+                            fontSize: 12,
+                            formatter: function (value) {
+                                if (value >= 1000) {
+                                    value = value / 1000 + 'k';
+                                }
+                                return value;
+                            }
+
+                        },
+
+                        splitLine: {
+                            show: false,
+
+                        }
+
+                    }],
+                series: [{
+                    name: "累计确诊",
+                    type: 'line',
+                    smooth: true,
+                    data: [1, 2, 3],//[260, 406, 529],
+                    itemStyle: {
+                        color: 'rgb(161,69,114)'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(161,69,114,0.39)'
+                        }, {
+                            offset: .34,
+                            color: 'rgba(100,60,114,0.25)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(50,60,114,0.00)'
+                        }])
+                    },
+                },
+                    {
+                        name: "累计治愈",
+                        type: 'line',
+                        smooth: true,
+                        data: [1, 2, 3],//[25, 25, 25]
+                        itemStyle: {
+                            color: 'rgb(113,151,173)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(113,151,173,0.39)'
+                            }, {
+                                offset: .34,
+                                color: 'rgba(76,155,255,0.25)'
+                            }, {
+                                offset: 1,
+                                color: 'rgba(38,197,254,0.00)'
+                            }])
+                        },
+                    },
+                    {
+                        name: "累计死亡",
+                        type: 'line',
+                        smooth: true,
+                        data: [6, 9, 17],//[6, 9, 17]
+                        itemStyle: {
+                            color: 'rgb(230,157,135)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(230,157,135,0.39)'
+                            }, {
+                                offset: .34,
+                                color: 'rgba(180,137,135,0.25)'
+                            }, {
+                                offset: 1,
+                                color: 'rgba(140,100,135,0.00)'
+                            }])
+                        },
+
+                    },
+                    {
+                        name: '新增确诊',
+                        type: 'bar',
+                        yAxisIndex: 1,
+                        data: []
+                    },
+                    {
+                        name: '新增治愈',
+                        type: 'bar',
+                        yAxisIndex: 1,
+                        data: []
+                    },
+                    {
+                        name: '新增死亡',
+                        type: 'bar',
+                        yAxisIndex: 1,
+                        data: []
+                    },],
+                animationEasing: 'elasticOut',
+                animationDelayUpdate: function (idx) {
+                    return idx * 5;
+                }
+
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option)
+            $.ajax({
+                url: "/" + str,
+                success: function (data) {
+                    // 指定图表的配置项和数据
+                    option.xAxis[0].data = data.day
+                    option.series[0].data = data.confirmed
+                    option.series[1].data = data.heal
+                    option.series[2].data = data.dead
+                    option.series[3].data = data.increase_confirmed
+                    option.series[4].data = data.increase_heal
+                    option.series[5].data = data.increase_dead
+                    myChart.setOption(option)
+                },
+                error: function (xhr, type, errorThrown) {
+
+                }
+            })
+        }
+
+
+
+
+
+    </script>
+	<script src="../lib/jquery/jquery.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../lib/bootstrap/js/bootstrap.js"></script>
+	</body>
+</html>
